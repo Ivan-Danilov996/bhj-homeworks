@@ -4,19 +4,52 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
+    this.counter = container.querySelector('.status__counter');
+    this.id = undefined
 
     this.reset();
 
     this.registerEvents();
+
   }
 
   reset() {
+    
     this.setNewWord();
     this.winsElement.textContent = 0;
     this.lossElement.textContent = 0;
+    if(this.id) {
+      clearInterval(this.id)
+    }
+    this.start()
+
   }
 
+  start() {
+    this.id = setInterval(() => {
+      if(this.counter.textContent <= 0) {
+        alert('Вы проиграли!');
+        clearInterval(this.id)
+      } else {
+        this.counter.textContent -= 1
+      }
+    }, 1000);
+  }
+
+  
+
   registerEvents() {
+    document.addEventListener( 'keydown', (event) => {
+      if(this.currentSymbol.textContent.toLowerCase() == event.key.toLowerCase()) {
+        this.success()
+      } else {
+        this.fail()
+      }
+    });
+
+
+    
+    
     /*
       TODO:
       Написать обработчик события, который откликается
@@ -44,12 +77,15 @@ class Game {
     if (++this.lossElement.textContent === 5) {
       alert('Вы проиграли!');
       this.reset();
+      
     }
     this.setNewWord();
   }
 
   setNewWord() {
     const word = this.getWord();
+
+    this.counter.textContent = word.length
 
     this.renderWord(word);
   }
@@ -87,4 +123,5 @@ class Game {
 }
 
 new Game(document.getElementById('game'))
+
 
