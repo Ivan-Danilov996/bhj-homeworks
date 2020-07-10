@@ -25,6 +25,21 @@ productQuantityControl.forEach((control) => {
 });
 
 productAdd.forEach((button) => {
+  function addProduct() {
+    cartProducts.innerHTML += `<div class="cart__product" data-id="${
+      button.closest(".product").dataset.id
+    }">
+                    <img class="cart__product-image" src="${button
+                      .closest(".product__controls")
+                      .previousElementSibling.getAttribute("src")}">
+                    <div class="cart__product-count">${
+                      button.previousElementSibling.querySelector(
+                        ".product__quantity-value"
+                      ).textContent
+                    }</div>
+                </div>`;
+  }
+
   button.addEventListener("click", () => {
     if (Array.from(cartProducts.children).length > 0) {
       if (
@@ -43,32 +58,10 @@ productAdd.forEach((button) => {
           }
         });
       } else {
-        cartProducts.innerHTML += `<div class="cart__product" data-id="${
-          button.closest(".product").dataset.id
-        }">
-                        <img class="cart__product-image" src="${button
-                          .closest(".product__controls")
-                          .previousElementSibling.getAttribute("src")}">
-                        <div class="cart__product-count">${
-                          button.previousElementSibling.querySelector(
-                            ".product__quantity-value"
-                          ).textContent
-                        }</div>
-                    </div>`;
+        addProduct();
       }
     } else {
-      cartProducts.innerHTML += `<div class="cart__product" data-id="${
-        button.closest(".product").dataset.id
-      }">
-                <img class="cart__product-image" src="${button
-                  .closest(".product__controls")
-                  .previousElementSibling.getAttribute("src")}">
-                <div class="cart__product-count">${
-                  button.previousElementSibling.querySelector(
-                    ".product__quantity-value"
-                  ).textContent
-                }</div>
-            </div>`;
+      addProduct();
     }
   });
 });
