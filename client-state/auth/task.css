@@ -35,3 +35,11 @@ body {
 .welcome_active {
   display: block;
 }
+
+.button {
+  display: none;
+}
+
+.button-active {
+  display: block;
+}
